@@ -30,7 +30,11 @@ public class ClienteController {
 	public String exibeCliente(String cpf) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(cpf);
-		return this.clientes.get(cpf).toString();
+		String result = "";
+		if(existeCliente(cpf)) {
+			result = this.clientes.get(cpf).toString();			
+		}
+		return result;
 	}
 	
 	public String exibeTodosOsClientes() {
@@ -40,5 +44,30 @@ public class ClienteController {
 		}
 		return listaClientes;
 		
+	}
+	
+	public boolean editaCadastro(String cpf, String nome, String email, String localizacao) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf);
+		validaEntrada.validaString(nome);
+		validaEntrada.validaString(email);
+		validaEntrada.validaString(localizacao);
+		if(existeCliente(cpf)) {
+			this.clientes.get(cpf).setNome(nome);
+			this.clientes.get(cpf).setEmail(email);
+			this.clientes.get(cpf).setLocalizacao(localizacao);	
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean removeCliente(String cpf) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf);
+		if(existeCliente(cpf)) {
+			this.clientes.remove(cpf);
+			return true;
+		}
+		return false;
 	}
 }

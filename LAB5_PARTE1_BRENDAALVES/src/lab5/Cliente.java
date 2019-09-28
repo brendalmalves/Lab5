@@ -8,9 +8,26 @@ public class Cliente {
 	private String localizacao;
 
 	public Cliente(String cpf, String nome, String email, String localizacao) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf);
+		validaEntrada.validaString(nome);
+		validaEntrada.validaString(email);
+		validaEntrada.validaString(localizacao);
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
+		this.localizacao = localizacao;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setLocalizacao(String localizacao) {
 		this.localizacao = localizacao;
 	}
 	

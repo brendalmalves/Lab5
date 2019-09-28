@@ -20,5 +20,11 @@ public class Facade {
 		return this.clienteController.exibeTodosOsClientes();
 	}
 	
+	public boolean editaCadastro(String cpf, String nome, String email, String localizacao) {
+		return this.clienteController.editaCadastro(cpf, nome, email, localizacao);
+	}
 	
+	public boolean removeCliente(String cpf) {
+		return this.clienteController.removeCliente(cpf);
+	}
 }
