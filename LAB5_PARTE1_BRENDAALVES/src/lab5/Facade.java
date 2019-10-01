@@ -7,6 +7,7 @@ public class Facade {
 	
 	public Facade() {
 		this.clienteController = new ClienteController();
+		this.fornecedorController = new FornecedorController();
 	}
 	
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
