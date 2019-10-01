@@ -1,10 +1,13 @@
 package lab5;
 
+import java.util.HashMap;
+
 public class Fornecedor {
 
 	private String nome;
 	private String email;
 	private String telefone;
+	private HashMap<String, Produto> produtos;
 	
 	public Fornecedor(String nome, String email, String telefone) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
@@ -14,7 +17,16 @@ public class Fornecedor {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
+		this.produtos = new HashMap<String, Produto>();
 		
+	}
+	
+	public boolean cadastarProduto(String nome, String descricao, double preco) {
+		if(produtos.containsKey(nome+descricao)) {
+			return false;
+		}
+		produtos.put(nome+descricao, new Produto(nome, descricao, preco));
+		return true;
 	}
 	
 	public void setEmail(String email) {

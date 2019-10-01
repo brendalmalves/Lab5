@@ -65,6 +65,11 @@ public class FornecedorController {
 		return false;
 	}
 	
+	public boolean cadastraProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+		return this.fornecedores.get(nomeFornecedor).cadastarProduto(nomeProduto, descricao, preco);
+		
+	}
+	
 	
 	
 	
