@@ -24,7 +24,7 @@ public class ClienteController {
 	public ClienteController() {
 		this.clientes = new HashMap<String, Cliente>();
 	}
-	
+
 	/**
 	 * Retorna uma String que representa o cpf, caso o cadastro seja bem sucedido.
 	 * Caso nao, retorna uma excecao e encerra. 
@@ -97,16 +97,18 @@ public class ClienteController {
 	 * @return valor booleado indicando se o processo de edicao 
 	 * foi bem sucedido ou nao.
 	 */
-	public boolean editaCadastro(String cpf, String nome, String email, String localizacao) {
+	public boolean editaCadastro(String cpf, String comando) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(cpf);
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(email);
-		validaEntrada.validaString(localizacao);
+		
 		if(existeCliente(cpf)) {
-			this.clientes.get(cpf).setNome(nome);
-			this.clientes.get(cpf).setEmail(email);
-			this.clientes.get(cpf).setLocalizacao(localizacao);	
+			if(comando.trim().toUpperCase().equals("nome")) {
+				this.clientes.get(cpf).setNome();
+			} else if(comando.trim().toUpperCase().equals("email")) {
+				this.clientes.get(cpf).setEmail();
+			} else if(comando.trim().toUpperCase().equals("localizacao")){
+				this.clientes.get(cpf).setLocalizacao();	
+			}
 			return true;
 		}
 		return false;

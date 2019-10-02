@@ -137,13 +137,60 @@ class TestClienteController {
 	}
 	
 	@Test
-	void testEditaCpfExistente() {
-		assertTrue(controle.editaCadastro("12345678900", "brenda", "brenda@gmail.com", "splab"));
+	void testEditaCpfExistenteEmail() {
+		assertTrue(controle.editaCadastro("12345678900", "eMail"));
+	}
+	
+	@Test
+	void testEditaCpfExistenteNome() {
+		assertTrue(controle.editaCadastro("12345678900", "nomE"));
+	}
+	
+	@Test
+	void testEditaCpfExistenteLocalizacao() {
+		assertTrue(controle.editaCadastro("12345678900", "Localizacao"));
+	}
+
+
+	
+	@Test
+	void testEditaCpfVazio() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			controle.editaCadastro("", "EMAIL");
+		});
+	}
+	
+	@Test
+	void testEditaCpfTudoVazio() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			controle.editaCadastro("", "");
+		});
+	}
+	
+	@Test
+	void testEditaCpfExistenteComandoNull() {
+		assertThrows(NullPointerException.class, () -> {
+			controle.editaCadastro("12345678900", null);
+		});
+	}
+	
+	@Test
+	void testEditaCpfCpfNull() {
+		assertThrows(NullPointerException.class, () -> {
+			controle.editaCadastro(null, "email");
+		});
+	}
+	
+	@Test
+	void testEditaCpfExistenteTudoNull() {
+		assertThrows(NullPointerException.class, () -> {
+			controle.editaCadastro(null, null);
+		});
 	}
 	
 	@Test
 	void testEditaCpfNaoExistente() {
-		assertFalse(controle.editaCadastro("9999999999", "brenda", "brenda@gmail.com", "splab"));
+		assertFalse(controle.editaCadastro("9999999999", "localizacao"));
 	}
 	
 	@Test 

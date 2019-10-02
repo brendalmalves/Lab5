@@ -29,8 +29,6 @@ public class Cliente {
 	/**
 	 * Constroi a representacao de um cliente, a partir do cpf, 
 	 * nome, email e localizacao.
-	 * Inicia o verificador de entrada.
-	 * Verifica os dados para lancar excecao em caso de String vazia ou entrada null.
 	 * @param cpf do cliente
 	 * @param nome do cliente
 	 * @param email do cliente
@@ -47,12 +45,12 @@ public class Cliente {
 		this.email = email;
 		this.localizacao = localizacao;
 	}
-	
+
 	/**
 	 * Metodo que permite a edicao do nome do cliente.
 	 * @param nome do cliente
 	 */
-	public void setNome(String nome) {
+	public void setNome() {
 		this.nome = nome;
 	}
 
@@ -60,7 +58,7 @@ public class Cliente {
 	 * Metodo que permite a edicao do email do cliente.
 	 * @param email do cliente
 	 */
-	public void setEmail(String email) {
+	public void setEmail() {
 		this.email = email;
 	}
 
@@ -68,7 +66,7 @@ public class Cliente {
 	 * Metodo que permite a edicao da localizacao do cliente.
 	 * @param localizacao do cliente
 	 */
-	public void setLocalizacao(String localizacao) {
+	public void setLocalizacao() {
 		this.localizacao = localizacao;
 	}
 	
