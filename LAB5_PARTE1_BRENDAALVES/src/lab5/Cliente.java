@@ -50,7 +50,7 @@ public class Cliente {
 	 * Metodo que permite a edicao do nome do cliente.
 	 * @param nome do cliente
 	 */
-	public void setNome() {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -58,7 +58,7 @@ public class Cliente {
 	 * Metodo que permite a edicao do email do cliente.
 	 * @param email do cliente
 	 */
-	public void setEmail() {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -66,7 +66,7 @@ public class Cliente {
 	 * Metodo que permite a edicao da localizacao do cliente.
 	 * @param localizacao do cliente
 	 */
-	public void setLocalizacao() {
+	public void setLocalizacao(String localizacao) {
 		this.localizacao = localizacao;
 	}
 	

@@ -38,9 +38,9 @@ public class Fornecedor {
 	 */
 	public Fornecedor(String nome, String email, String telefone) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(email);
-		validaEntrada.validaString(telefone);
+		validaEntrada.validaString(nome, "Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(email, "Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(telefone, "Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -57,12 +57,12 @@ public class Fornecedor {
 	 */
 	public boolean cadastarProduto(String nome, String descricao, double preco) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(descricao);
+		validaEntrada.validaString(nome, "Erro no cadastro do produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro no cadastro do produto: descricao nao pode ser vazia ou nula.");
 		if(produtos.containsKey(nome+descricao)) {
-			return false;
+			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
-		produtos.put(nome+descricao, new Produto(nome, descricao, preco));
+		this.produtos.put(nome+descricao, new Produto(nome, descricao, preco));
 		return true;
 	}
 	
@@ -86,11 +86,13 @@ public class Fornecedor {
 	 */
 	public String consultarProduto(String nome, String descricao) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(descricao);
+		validaEntrada.validaString(nome, "Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
 		String result = "";
 		if(existeProduto(nome, descricao)) {
 			result = this.produtos.get(nome+descricao).toString();
+		} else {
+			throw new IllegalArgumentException("Erro na exibicao de produto: produto nao existe.");
 		}
 		return result;
 	}
@@ -117,8 +119,8 @@ public class Fornecedor {
 	 */
 	public boolean editaProduto(String nome, String descricao, String comando) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(descricao);
+		validaEntrada.validaString(nome, "Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
 		if(existeProduto(nome, descricao)) {
 			if(comando.trim().toUpperCase().equals("preço")) {
 				this.produtos.get(nome+descricao).setPreco();
@@ -136,27 +138,28 @@ public class Fornecedor {
 	 */
 	public boolean removeProduto(String nome, String descricao) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(descricao);
+		validaEntrada.validaString(nome, "Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		if(existeProduto(nome, descricao)) {
 			this.produtos.remove(nome+descricao);
 			return true;
+		} else {
+			throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
 		}
-		return false;
 	}
 	
 	/**
 	 * Metodo que permite a edicao do email do fornecedor.
 	 * @param email do fornecedor
 	 */
-	public void setEmail() {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	/**
 	 * Metodo que permite a edicao do telefone do fornecedor.
 	 * @param telefone do fornecedor
 	 */
-	public void setTelefone() {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 

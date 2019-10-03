@@ -22,15 +22,15 @@ public class Facade {
 		return this.clienteController.exibeTodosOsClientes();
 	}
 	
-	public boolean editaCliente(String cpf, String comando) {
-		return this.clienteController.editaCadastro(cpf, comando);
+	public boolean editaCliente(String cpf, String atributo, String novoValor) {
+		return this.clienteController.editaCadastro(cpf, atributo, novoValor);
 	}
 	
 	public boolean removeCliente(String cpf) {
 		return this.clienteController.removeCliente(cpf);
 	}
 	
-	public String cadastraFornecedor(String nome, String email, String telefone) {
+	public String adicionaFornecedor(String nome, String email, String telefone) {
 		return this.fornecedorController.cadastraFornecedor(nome, email, telefone);
 	}
 	
@@ -42,20 +42,20 @@ public class Facade {
 		return this.fornecedorController.exibeTodosOsFornecedores();
 	}
 	
-	public boolean editaCadastroFornecedor(String nome, String comando) {
-		return this.fornecedorController.editaCadastro(nome, comando);
+	public boolean editaFornecedor(String nome, String atributo, String novoValor) {
+		return this.fornecedorController.editaCadastro(nome, atributo, novoValor);
 	}
 	
 	public boolean removeFornecedor(String nome) {
 		return this.fornecedorController.removeFornecedor(nome);
 	}
 	
-	public boolean cadastraProdutoNoFornecedor(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+	public boolean adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		return this.fornecedorController.cadastraProduto(nomeFornecedor, nomeProduto, descricao, preco);
 		
 	}
 	
-	public String exibeUmProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+	public String exibeProduto(String nomeFornecedor, String nomeProduto, String descricao) {
 		return this.fornecedorController.consultaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 	
@@ -71,7 +71,7 @@ public class Facade {
 		return this.fornecedorController.editaProduto(nomeFornecedor, nomeProduto, descricao, comando);
 	}
 	
-	public boolean removeProdutoDeUmFornecedor(String nomeFornecedor, String nome, String descricao) {
+	public boolean removeProduto(String nomeFornecedor, String nome, String descricao) {
 		return this.fornecedorController.removeProduto(nomeFornecedor, nome, descricao);
 	}
 }

@@ -101,22 +101,27 @@ public class ClienteController {
 	 * @return valor booleado indicando se o processo de edicao 
 	 * foi bem sucedido ou nao.
 	 */
-	public boolean editaCadastro(String cpf, String comando) {
+	public boolean editaCadastro(String cpf, String atributo, String novoValor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaCpf(cpf, "Erro no cadastro do cliente: cpf invalido.");
-		validaEntrada.validaString(cpf, "Erro na edicao do cliente: cpf nao pode ser editado.");
-		
+		validaEntrada.validaString(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(novoValor, "Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(atributo, "Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
 		if(existeCliente(cpf)) {
-			if(comando.trim().toUpperCase().equals("nome")) {
-				this.clientes.get(cpf).setNome();
-			} else if(comando.trim().toUpperCase().equals("email")) {
-				this.clientes.get(cpf).setEmail();
-			} else if(comando.trim().toUpperCase().equals("localizacao")){
-				this.clientes.get(cpf).setLocalizacao();	
+			if(atributo.trim().toUpperCase().equals("cpf")) {
+				throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser editado.");
+			} else if(atributo.trim().toUpperCase().equals("nome")) {
+				this.clientes.get(cpf).setNome(novoValor);
+			} else if(atributo.trim().toUpperCase().equals("email")) {
+				this.clientes.get(cpf).setEmail(novoValor);
+			} else if(atributo.trim().toUpperCase().equals("localizacao")){
+				this.clientes.get(cpf).setLocalizacao(novoValor);	
+			} else {
+				throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
 			}
 			return true;
+		} else {
+			throw new IllegalArgumentException("Erro na edicao do cliente: cliente nao existe.");
 		}
-		return false;
 	}
 	
 	/**
@@ -128,10 +133,13 @@ public class ClienteController {
 	public boolean removeCliente(String cpf) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		validaEntrada.validaCpf(cpf, "Erro na remocao do cliente: cliente nao existe.");
 		if(existeCliente(cpf)) {
 			this.clientes.remove(cpf);
 			return true;
+		} else {
+			throw new IllegalArgumentException("Erro na remocao do cliente: cliente nao existe.");
 		}
-		return false;
+		
 	}
 }
