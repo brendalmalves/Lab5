@@ -67,8 +67,8 @@ public class Facade {
 		return this.fornecedorController.exibeTodosProdutosCadastrados();
 	}
 	
-	public boolean editaProduto(String nomeFornecedor, String nomeProduto, String descricao, String comando) {
-		return this.fornecedorController.editaProduto(nomeFornecedor, nomeProduto, descricao, comando);
+	public boolean editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoValor) {
+		return this.fornecedorController.editaProduto(nomeProduto, descricao, nomeFornecedor, novoValor);
 	}
 	
 	public boolean removeProduto(String nomeFornecedor, String nome, String descricao) {

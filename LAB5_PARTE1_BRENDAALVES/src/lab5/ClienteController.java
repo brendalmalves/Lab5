@@ -107,13 +107,13 @@ public class ClienteController {
 		validaEntrada.validaString(novoValor, "Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(atributo, "Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
 		if(existeCliente(cpf)) {
-			if(atributo.trim().toUpperCase().equals("cpf")) {
+			if(atributo.trim().toLowerCase().equals("cpf")) {
 				throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser editado.");
-			} else if(atributo.trim().toUpperCase().equals("nome")) {
+			} else if(atributo.trim().toLowerCase().equals("nome")) {
 				this.clientes.get(cpf).setNome(novoValor);
-			} else if(atributo.trim().toUpperCase().equals("email")) {
+			} else if(atributo.trim().toLowerCase().equals("email")) {
 				this.clientes.get(cpf).setEmail(novoValor);
-			} else if(atributo.trim().toUpperCase().equals("localizacao")){
+			} else if(atributo.trim().toLowerCase().equals("localizacao")){
 				this.clientes.get(cpf).setLocalizacao(novoValor);	
 			} else {
 				throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");

@@ -95,11 +95,11 @@ public class FornecedorController {
 		validaEntrada.validaString(atributo, "Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(novoValor,"Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
 		if(existeFornecedor(nome)) {
-			if(atributo.trim().toUpperCase().equals("nome")) {
+			if(atributo.trim().toLowerCase().equals("nome")) {
 				throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser editado.");
-			} else if(atributo.trim().toUpperCase().equals("email")) {
+			} else if(atributo.trim().toLowerCase().equals("email")) {
 				this.fornecedores.get(nome).setEmail(novoValor);
-			} else if(atributo.trim().toUpperCase().equals("telefone")) {
+			} else if(atributo.trim().toLowerCase().equals("telefone")) {
 				this.fornecedores.get(nome).setTelefone(novoValor);
 			} else {
 				throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
@@ -200,12 +200,13 @@ public class FornecedorController {
 	 * @param comando dado a ser editado
 	 * @return valor booleano indicando se a edicao foi bem sucedida ou ano
 	 */
-	public boolean editaProduto(String nomeFornecedor, String nomeProduto, String descricao, String comando) {
+	public boolean editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoValor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nomeProduto, "Erro na edicao do produto: nome nao pode ser vazio ou nulo.");
-		validaEntrada.validaString(descricao, "Erro na edicao do produto: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaString(nomeProduto, "Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaString(nomeFornecedor, "Erro na edicao de produto: fornecedor nao pode ser vazio ou nulo.");
 		if(existeFornecedor(nomeFornecedor)) {
-			return this.fornecedores.get(nomeFornecedor).editaProduto(nomeProduto, descricao, comando);
+			return this.fornecedores.get(nomeFornecedor).editaProduto(nomeProduto, descricao, novoValor);
 		} else {
 			throw new IllegalArgumentException("Erro na edicao de produto: fornecedor nao existe.");
 		}

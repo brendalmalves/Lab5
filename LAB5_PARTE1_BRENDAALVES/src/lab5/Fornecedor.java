@@ -59,6 +59,7 @@ public class Fornecedor {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(nome, "Erro no cadastro do produto: nome nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(descricao, "Erro no cadastro do produto: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaNumeroPositivo(preco, "Erro no cadastro de produto: preco invalido.");
 		if(produtos.containsKey(nome+descricao)) {
 			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
@@ -117,17 +118,17 @@ public class Fornecedor {
 	 * @param comando dado a ser editado
 	 * @return valor booleano indicando se a edicao foi bem sucedida ou nao.
 	 */
-	public boolean editaProduto(String nome, String descricao, String comando) {
+	public boolean editaProduto(String nome, String descricao, double novoValor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(nome, "Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(descricao, "Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaNumeroPositivo(novoValor, "Erro na edicao de produto: preco invalido.");
 		if(existeProduto(nome, descricao)) {
-			if(comando.trim().toUpperCase().equals("preço")) {
-				this.produtos.get(nome+descricao).setPreco();
-				return true;
-			} 
+			this.produtos.get(nome+descricao).setPreco(novoValor);
+			return true;
+		} else {
+			throw new IllegalArgumentException("Erro na edicao de produto: produto nao existe.");
 		}
-		return false;
 	}
 	
 	/**

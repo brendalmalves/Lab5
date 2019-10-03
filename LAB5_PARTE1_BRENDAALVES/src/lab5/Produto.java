@@ -30,14 +30,15 @@ public class Produto {
 	 */
 	public Produto(String nome, String descricao, double preco) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(descricao);
+		validaEntrada.validaString(nome, "Erro no cadastro do produto: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro no cadastro do produto: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaNumeroPositivo(preco, "Erro no cadastro de produto: preco invalido.");
 		this.descricao = descricao;
 		this.nome = nome;
 		this.preco = preco;
 	}
 	
-	public void setPreco() {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
 	
@@ -47,7 +48,7 @@ public class Produto {
 	 */
 	@Override
 	public String toString() {
-		return this.nome + " - " + this.descricao + " - R$" + this.preco;
+		return this.nome + " - " + this.descricao + " - R$" + String.format("%.2f",this.preco).replace(".", ",");
 	}
 	
 

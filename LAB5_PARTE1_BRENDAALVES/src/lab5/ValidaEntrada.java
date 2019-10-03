@@ -19,4 +19,10 @@ public class ValidaEntrada {
 		}
 	}
 	
+	public void validaNumeroPositivo(double numero, String mensagem) {
+		if(numero < 0) {
+			throw new IllegalArgumentException(mensagem);
+		}
+	}
+	
 }
