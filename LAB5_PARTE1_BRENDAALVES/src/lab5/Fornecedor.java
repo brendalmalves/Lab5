@@ -27,7 +27,7 @@ public class Fornecedor {
 	/**
 	 * Representacao do mapa que armazena os produtos cadastrados.
 	 */
-	private HashMap<String, Produto> produtos;
+	private HashMap<IdProduto, Produto> produtos;
 	
 	/**
 	 * Constroi a representacao de um fornecedor, a partir do seu
@@ -44,7 +44,7 @@ public class Fornecedor {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.produtos = new HashMap<String, Produto>();
+		this.produtos = new HashMap<IdProduto, Produto>();
 		
 	}
 	
@@ -60,10 +60,12 @@ public class Fornecedor {
 		validaEntrada.validaString(nome, "Erro no cadastro do produto: nome nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(descricao, "Erro no cadastro do produto: descricao nao pode ser vazia ou nula.");
 		validaEntrada.validaNumeroPositivo(preco, "Erro no cadastro de produto: preco invalido.");
-		if(produtos.containsKey(nome+descricao)) {
+		IdProduto id = new IdProduto(nome, descricao);
+		
+		if(produtos.containsKey(id)) {
 			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
-		this.produtos.put(nome+descricao, new Produto(nome, descricao, preco));
+		this.produtos.put(id, new Produto(nome, descricao, preco));
 		return true;
 	}
 	
@@ -75,7 +77,7 @@ public class Fornecedor {
 	 * @return valor booleano indicando se o produto existe ou nao.
 	 */
 	public boolean existeProduto(String nome, String descricao) {
-		return this.produtos.containsKey(nome+descricao);
+		return this.produtos.containsKey(new IdProduto(nome, descricao));
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class Fornecedor {
 		validaEntrada.validaString(descricao, "Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
 		String result = "";
 		if(existeProduto(nome, descricao)) {
-			result = this.produtos.get(nome+descricao).toString();
+			result = this.produtos.get(new IdProduto(nome, descricao)).toString();
 		} else {
 			throw new IllegalArgumentException("Erro na exibicao de produto: produto nao existe.");
 		}
@@ -105,8 +107,8 @@ public class Fornecedor {
 	 */
 	public String exibirTodosOsProdutos() {
 		String listaProdutos = "";
-		for (String nomeProduto : produtos.keySet()) {
-			listaProdutos += this.nome + " - " + this.produtos.get(nomeProduto).toString() + " | ";
+		for (Produto produto : produtos.values()) {
+			listaProdutos += this.nome + " - " + produto.toString() + " | ";
 		}
 		return listaProdutos;
 	}
@@ -124,7 +126,7 @@ public class Fornecedor {
 		validaEntrada.validaString(descricao, "Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
 		validaEntrada.validaNumeroPositivo(novoValor, "Erro na edicao de produto: preco invalido.");
 		if(existeProduto(nome, descricao)) {
-			this.produtos.get(nome+descricao).setPreco(novoValor);
+			this.produtos.get(new IdProduto(nome, descricao)).setPreco(novoValor);
 			return true;
 		} else {
 			throw new IllegalArgumentException("Erro na edicao de produto: produto nao existe.");
@@ -142,7 +144,7 @@ public class Fornecedor {
 		validaEntrada.validaString(nome, "Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(descricao, "Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		if(existeProduto(nome, descricao)) {
-			this.produtos.remove(nome+descricao);
+			this.produtos.remove(new IdProduto(nome, descricao));
 			return true;
 		} else {
 			throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
