@@ -38,12 +38,13 @@ public class ClienteController {
 	 */
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(cpf);
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(email);
-		validaEntrada.validaString(localizacao);
+		validaEntrada.validaString(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+		validaEntrada.validaCpf(cpf, "Erro no cadastro do cliente: cpf invalido.");
+		validaEntrada.validaString(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(email, "Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(localizacao, "Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		if(existeCliente(cpf)) {
-			throw new IllegalArgumentException("Cliente já cadastrado!");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
 		this.clientes.put(cpf, new Cliente(cpf, nome, email, localizacao));
 		return cpf;
@@ -66,11 +67,14 @@ public class ClienteController {
 	 */
 	public String exibeCliente(String cpf) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(cpf);
+		validaEntrada.validaString(cpf, "Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.");
 		String result = "";
 		if(existeCliente(cpf)) {
 			result = this.clientes.get(cpf).toString();			
+		}else {
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 		}
+		
 		return result;
 	}
 	
@@ -99,7 +103,8 @@ public class ClienteController {
 	 */
 	public boolean editaCadastro(String cpf, String comando) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(cpf);
+		validaEntrada.validaCpf(cpf, "Erro no cadastro do cliente: cpf invalido.");
+		validaEntrada.validaString(cpf, "Erro na edicao do cliente: cpf nao pode ser editado.");
 		
 		if(existeCliente(cpf)) {
 			if(comando.trim().toUpperCase().equals("nome")) {
@@ -122,7 +127,7 @@ public class ClienteController {
 	 */
 	public boolean removeCliente(String cpf) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(cpf);
+		validaEntrada.validaString(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
 		if(existeCliente(cpf)) {
 			this.clientes.remove(cpf);
 			return true;

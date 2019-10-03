@@ -36,10 +36,10 @@ public class Cliente {
 	 */
 	public Cliente(String cpf, String nome, String email, String localizacao) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(cpf);
-		validaEntrada.validaString(nome);
-		validaEntrada.validaString(email);
-		validaEntrada.validaString(localizacao);
+		validaEntrada.validaString(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(email, "Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(localizacao, "Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;

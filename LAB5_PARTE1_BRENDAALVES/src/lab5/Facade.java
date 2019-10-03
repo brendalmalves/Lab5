@@ -10,7 +10,7 @@ public class Facade {
 		this.fornecedorController = new FornecedorController();
 	}
 	
-	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		return this.clienteController.cadastraCliente(cpf, nome, email, localizacao);
 	}
 	
@@ -22,7 +22,7 @@ public class Facade {
 		return this.clienteController.exibeTodosOsClientes();
 	}
 	
-	public boolean editaCadastroCliente(String cpf, String comando) {
+	public boolean editaCliente(String cpf, String comando) {
 		return this.clienteController.editaCadastro(cpf, comando);
 	}
 	
