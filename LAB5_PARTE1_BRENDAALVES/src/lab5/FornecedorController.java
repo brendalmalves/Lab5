@@ -1,6 +1,10 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Representacao de um fornecedor, resposavel por 
@@ -76,9 +80,15 @@ public class FornecedorController {
 	 * @return representacao em String de todos os fornecedores cadastrados.
 	 */
 	public String exibeTodosOsFornecedores() {
+		List<Fornecedor> fornecedoresOrdenados = new ArrayList<>(fornecedores.values());
+		Collections.sort(fornecedoresOrdenados, Comparator.comparing(Fornecedor::getNome));
 		String listaFornecedores = "";
-		for (String nome : fornecedores.keySet()) {
-			listaFornecedores += this.fornecedores.get(nome).toString() + " | ";	
+		for (int i = 0; i < fornecedoresOrdenados.size(); i++) {
+			if(i == fornecedoresOrdenados.size() - 1) {
+				listaFornecedores += fornecedoresOrdenados.get(i).toString();
+			} else {
+				listaFornecedores += fornecedoresOrdenados.get(i).toString() + " | ";					
+			}
 		}
 		return listaFornecedores;
 	}
@@ -175,8 +185,12 @@ public class FornecedorController {
 	 */
 	public String consultarTodosProdutos(String nomeFornecedor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nomeFornecedor, "Erro na edicao de produto: fornecedor nao pode ser vazio ou nulo.");
-		return this.fornecedores.get(nomeFornecedor).exibirTodosOsProdutos();
+		validaEntrada.validaString(nomeFornecedor, "Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		if(existeFornecedor(nomeFornecedor)) {
+			return this.fornecedores.get(nomeFornecedor).exibirTodosOsProdutos();			
+		} else {
+			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao existe.");
+		}
 	}
 	
 	/**
@@ -184,9 +198,15 @@ public class FornecedorController {
 	 * @return representacao em String de todos os produtos
 	 */
 	public String exibeTodosProdutosCadastrados() {
+		List<Fornecedor> fornecedoresProdutosOrdenados = new ArrayList<Fornecedor>(fornecedores.values());
+		Collections.sort(fornecedoresProdutosOrdenados, Comparator.comparing(Fornecedor::getNome));
 		String listaProdutos = "";
-		for (String fornecedor : fornecedores.keySet()) {
-			listaProdutos += consultarTodosProdutos(fornecedor);
+		for (int i = 0; i < fornecedoresProdutosOrdenados.size(); i++) {
+			if(i == fornecedoresProdutosOrdenados.size() - 1) {
+				listaProdutos += fornecedoresProdutosOrdenados.get(i).exibirTodosOsProdutos();				
+			} else {
+				listaProdutos += fornecedoresProdutosOrdenados.get(i).exibirTodosOsProdutos() + " | ";				
+			}			
 		}
 		return listaProdutos;
 	}	

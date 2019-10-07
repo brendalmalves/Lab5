@@ -45,6 +45,10 @@ public class Cliente {
 		this.email = email;
 		this.localizacao = localizacao;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
 
 	/**
 	 * Metodo que permite a edicao do nome do cliente.

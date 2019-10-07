@@ -18,7 +18,7 @@ public class Facade {
 		return this.clienteController.exibeCliente(cpf);
 	}
 	
-	public String exibeTodosOsClientes() {
+	public String exibeClientes() {
 		return this.clienteController.exibeTodosOsClientes();
 	}
 	
@@ -38,7 +38,7 @@ public class Facade {
 		return this.fornecedorController.exibeFornecedor(nome);
 	}
 	
-	public String exibeTodosOsFornecedores() {
+	public String exibeFornecedores() {
 		return this.fornecedorController.exibeTodosOsFornecedores();
 	}
 	
@@ -59,11 +59,11 @@ public class Facade {
 		return this.fornecedorController.consultaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 	
-	public String exibeTodosProdutosDeUmFornecedor(String nomeFornecedor) {
+	public String exibeProdutosFornecedor(String nomeFornecedor) {
 		return this.fornecedorController.consultarTodosProdutos(nomeFornecedor);
 	}
 	
-	public String exibeTodosProdutosCadastrados() {
+	public String exibeProdutos() {
 		return this.fornecedorController.exibeTodosProdutosCadastrados();
 	}
 	

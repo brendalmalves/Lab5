@@ -1,6 +1,11 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+
 
 /**
  * Representacao de um Controller dos clientes cadastrados, 
@@ -24,7 +29,7 @@ public class ClienteController {
 	public ClienteController() {
 		this.clientes = new HashMap<String, Cliente>();
 	}
-
+	
 	/**
 	 * Retorna uma String que representa o cpf, caso o cadastro seja bem sucedido.
 	 * Caso nao, retorna uma excecao e encerra. 
@@ -84,9 +89,15 @@ public class ClienteController {
 	 * @return representacao de uma String com todos os clientes
 	 */
 	public String exibeTodosOsClientes() {
+		List<Cliente> clientesOrdenados = new ArrayList<>(clientes.values());
+		Collections.sort(clientesOrdenados, Comparator.comparing(Cliente::getNome));
 		String listaClientes = "";
-		for (String cpf : clientes.keySet()) {
-			listaClientes += this.clientes.get(cpf).toString() + " | ";
+		for (int i = 0; i < clientesOrdenados.size(); i++) {
+			if(i == clientesOrdenados.size() - 1) {
+				listaClientes += clientesOrdenados.get(i).toString();
+			} else {
+				listaClientes += clientesOrdenados.get(i).toString() + " | ";
+			}
 		}
 		return listaClientes;
 		

@@ -1,6 +1,10 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Representacao de um fornecedor que recebe nome, 
@@ -46,6 +50,10 @@ public class Fornecedor {
 		this.telefone = telefone;
 		this.produtos = new HashMap<IdProduto, Produto>();
 		
+	}
+	
+	public String getNome() {
+		return nome;
 	}
 	
 	/**
@@ -106,9 +114,14 @@ public class Fornecedor {
 	 * @return todos os produtos cadastrados em um fornecedor.
 	 */
 	public String exibirTodosOsProdutos() {
+		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
 		String listaProdutos = "";
-		for (Produto produto : produtos.values()) {
-			listaProdutos += this.nome + " - " + produto.toString() + " | ";
+		for (int i = 0; i < produtosOrdenados.size(); i++) {
+			if(i == produtosOrdenados.size() - 1) {
+				listaProdutos += this.nome + " - " + produtosOrdenados.get(i).toString();
+			} else {
+				listaProdutos += this.nome + " - " + produtosOrdenados.get(i).toString() + " | ";				
+			}
 		}
 		return listaProdutos;
 	}
