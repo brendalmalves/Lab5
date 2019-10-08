@@ -103,15 +103,7 @@ public class ClienteController {
 		
 	}
 	
-	/**
-	 * Metodo que permite a edicao dos dados do cliente.
-	 * @param cpf do cliente
-	 * @param nome do cliente
-	 * @param email do cliente
-	 * @param localizacao do cliente
-	 * @return valor booleado indicando se o processo de edicao 
-	 * foi bem sucedido ou nao.
-	 */
+	
 	public boolean editaCadastro(String cpf, String atributo, String novoValor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");

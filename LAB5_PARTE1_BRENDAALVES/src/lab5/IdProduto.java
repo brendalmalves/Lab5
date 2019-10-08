@@ -2,8 +2,8 @@ package lab5;
 
 public class IdProduto {
 
-	private String nome;
-	private String descricao;
+	protected String nome;
+	protected String descricao;
 	
 	public IdProduto(String nome, String descricao) {
 		this.nome = nome;

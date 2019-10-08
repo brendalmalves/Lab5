@@ -22,6 +22,16 @@ public class Produto {
 	 */
 	private String descricao;
 	
+	public String getNome() {
+		return nome;
+	}
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+
 	/**
 	 * Constroi um produto a partir do seu nome, descricao e preco.
 	 * @param nome do produto

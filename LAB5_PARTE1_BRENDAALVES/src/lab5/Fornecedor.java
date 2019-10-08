@@ -2,9 +2,9 @@ package lab5;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Representacao de um fornecedor que recebe nome, 
@@ -31,7 +31,7 @@ public class Fornecedor {
 	/**
 	 * Representacao do mapa que armazena os produtos cadastrados.
 	 */
-	private HashMap<IdProduto, Produto> produtos;
+	private Map<IdProduto, Produto> produtos;
 	
 	/**
 	 * Constroi a representacao de um fornecedor, a partir do seu
@@ -114,7 +114,12 @@ public class Fornecedor {
 	 * @return todos os produtos cadastrados em um fornecedor.
 	 */
 	public String exibirTodosOsProdutos() {
+		if(produtos.isEmpty()) {
+			return this.nome + " -";
+		}
+		OrdenaProdutoId c = new OrdenaProdutoId();
 		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
+		Collections.sort(produtosOrdenados, c);
 		String listaProdutos = "";
 		for (int i = 0; i < produtosOrdenados.size(); i++) {
 			if(i == produtosOrdenados.size() - 1) {
@@ -219,6 +224,6 @@ public class Fornecedor {
 			return false;
 		return true;
 	}
-	
+
 	
 }
