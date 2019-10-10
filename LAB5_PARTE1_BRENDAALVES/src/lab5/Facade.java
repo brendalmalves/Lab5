@@ -74,4 +74,6 @@ public class Facade {
 	public boolean removeProduto(String nomeFornecedor, String nome, String descricao) {
 		return this.fornecedorController.removeProduto(nomeFornecedor, nome, descricao);
 	}
+	
+
 }

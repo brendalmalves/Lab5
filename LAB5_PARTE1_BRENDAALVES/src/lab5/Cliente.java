@@ -1,5 +1,8 @@
 package lab5;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Representacao de um cliente, que recebe cpf, nome,
  * email e localizacao para o cadastro.
@@ -25,6 +28,7 @@ public class Cliente {
 	 * Representacao em String da localizacao do cliente.
 	 */
 	private String localizacao;
+	private Map<String, Conta> contas;
 
 	/**
 	 * Constroi a representacao de um cliente, a partir do cpf, 
@@ -44,6 +48,7 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 		this.localizacao = localizacao;
+		this.contas = new HashMap<String, Conta>();
 	}
 	
 	public String getNome() {
@@ -114,6 +119,15 @@ public class Cliente {
 		} else if (!cpf.equals(other.cpf))
 			return false;
 		return true;
+	}
+	
+	public void adicionaCompra(String fornecedor, String data,String nomeProduto, double preco) {
+		if(contas.containsKey(fornecedor)) {
+			contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+		} else {
+			contas.put(fornecedor, new Conta(fornecedor));
+			contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+		}
 	}
 	
 	
