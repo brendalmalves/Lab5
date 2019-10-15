@@ -81,4 +81,8 @@ public class Facade {
 		return this.controllerPrincipal.getDebito(cpf, nomeFornecedor);
 	}
 	
+	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator, String produtos) {
+		this.controllerPrincipal.adicionaCombo(nomeFornecedor, nomeCombo, descricao, fator, produtos);
+	}
+	
 }

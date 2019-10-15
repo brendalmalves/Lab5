@@ -97,20 +97,24 @@ public class ControllerPrincipal {
 	}
 
 	public double getDebito(String cpf, String nomeFornecedor) {
-		double debito = 0.0;
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaCpf(cpf, "Erro ao recuperar debito: cpf invalido.");
 		validaEntrada.validaString(nomeFornecedor, "Erro ao recuperar debito: fornecedor nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(cpf, "Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
-		if(this.clienteController.existeCliente(cpf) && this.fornecedorController.existeFornecedor(nomeFornecedor)) {
-			debito = this.clienteController.getDebito(cpf, nomeFornecedor);				
+		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao existe.");
 		} else if(!this.clienteController.existeCliente(cpf)){
 			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao existe.");
-		} else if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
-			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao existe.");
 		}
-		return debito;
+		return this.clienteController.getDebito(cpf, nomeFornecedor);				
+	
 		}
+
+	public void adicionaCombo(String nomeFornecedor, String nomeCombo, double fator, String produtos) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(nomeFornecedor, "");
+
+	}
 
 
 }

@@ -132,8 +132,7 @@ public class Cliente {
 
 	public double getDebito(String nomeFornecedor) {
 		if(this.contas.containsKey(nomeFornecedor)) {
-			double preco = this.contas.get(nomeFornecedor).getDebito();
-			return preco;
+			return this.contas.get(nomeFornecedor).getDebito();
 		} else {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
 		}

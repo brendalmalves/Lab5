@@ -157,15 +157,12 @@ public class ClienteController {
 		}
 	}
 
-	// VERIFICAR
 	public double getDebito(String cpf, String nomeFornecedor) {
-		double preco = 0.0;
 		if(this.clientes.containsKey(cpf)) {
-			preco = this.clientes.get(cpf).getDebito(nomeFornecedor);
+			return this.clientes.get(cpf).getDebito(nomeFornecedor);
 		} else {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao existe.");
 		}
-		return preco;
 	}
 
 }
