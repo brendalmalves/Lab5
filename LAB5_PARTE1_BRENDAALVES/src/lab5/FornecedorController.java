@@ -251,6 +251,14 @@ public class FornecedorController {
 		}
 	}
 
+	public boolean existeProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+		 return this.fornecedores.get(nomeFornecedor).existeProduto(nomeProduto, descricao);
+	}
+
+	public double getPreco(String nomeFornecedor, String nomeProduto, String descricao) {
+		return this.fornecedores.get(nomeFornecedor).getPreco(nomeProduto, descricao);
+	}
+
 	
 	
 	

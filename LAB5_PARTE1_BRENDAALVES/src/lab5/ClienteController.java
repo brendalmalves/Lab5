@@ -145,4 +145,27 @@ public class ClienteController {
 		}
 		
 	}
+
+	public void adicionaCompra(String cpf, String nomeFornecedor, String data, String nomeProduto, String descricao,
+			double preco) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf, "Erro ao cadastrar compra: cpf nao pode ser vazio ou nulo.");
+		if(this.clientes.containsKey(cpf)) {
+			this.clientes.get(cpf).adicionaCompra(nomeFornecedor, data, nomeProduto, preco);
+		} else {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cliente nao existe.");
+		}
+	}
+
+	// VERIFICAR
+	public double getDebito(String cpf, String nomeFornecedor) {
+		double preco = 0.0;
+		if(this.clientes.containsKey(cpf)) {
+			preco = this.clientes.get(cpf).getDebito(nomeFornecedor);
+		} else {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao existe.");
+		}
+		return preco;
+	}
+
 }

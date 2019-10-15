@@ -225,5 +225,9 @@ public class Fornecedor {
 		return true;
 	}
 
+	public double getPreco(String nomeProduto, String descricao) {
+		return this.produtos.get(new IdProduto(nomeProduto, descricao)).getPreco();
+	}
+
 	
 }

@@ -100,6 +100,11 @@ public class Produto {
 			return false;
 		return true;
 	}
+
+
+	public double getPreco() {
+		return preco;
+	}
 	
 	
 

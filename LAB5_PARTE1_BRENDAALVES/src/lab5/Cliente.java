@@ -122,13 +122,24 @@ public class Cliente {
 	}
 	
 	public void adicionaCompra(String fornecedor, String data,String nomeProduto, double preco) {
-		if(contas.containsKey(fornecedor)) {
-			contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+		if(this.contas.containsKey(fornecedor)) {
+			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
 		} else {
-			contas.put(fornecedor, new Conta(fornecedor));
-			contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+			this.contas.put(fornecedor, new Conta(fornecedor));
+			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
 		}
 	}
+
+	public double getDebito(String nomeFornecedor) {
+		if(this.contas.containsKey(nomeFornecedor)) {
+			double preco = this.contas.get(nomeFornecedor).getDebito();
+			return preco;
+		} else {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+		}
+	}
+	
+	
 	
 	
 }
