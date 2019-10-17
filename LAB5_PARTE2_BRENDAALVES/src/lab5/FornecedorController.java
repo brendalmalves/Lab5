@@ -259,6 +259,12 @@ public class FornecedorController {
 		return this.fornecedores.get(nomeFornecedor).getPreco(nomeProduto, descricao);
 	}
 
+	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator,
+			String produtos) {
+		this.fornecedores.get(nomeFornecedor).adicionaCombo(nomeCombo, descricao, fator, produtos);
+		
+	}
+
 	
 	
 	

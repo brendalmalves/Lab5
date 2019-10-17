@@ -110,10 +110,36 @@ public class ControllerPrincipal {
 	
 		}
 
-	public void adicionaCombo(String nomeFornecedor, String nomeCombo, double fator, String produtos) {
+	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator, String produtos) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
-		validaEntrada.validaString(nomeFornecedor, "");
-
+		validaEntrada.validaString(nomeFornecedor, "Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaString(nomeCombo, "Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(produtos, "Erro no cadastro de combo: combo deve ter produtos.");
+		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao existe.");
+		}
+		if(fator <= 0 || fator >= 1) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
+		}
+		
+		String[] produtosCombo;
+		produtosCombo = produtos.trim().split(",");
+		String[] produto1;
+		produto1 = produtos.trim().split("-");
+		String[] produto2;
+		produto2 = produtos.trim().split("-");
+		if(!fornecedorController.existeProduto(nomeFornecedor, produto1[0], produto1[1]) || !fornecedorController.existeProduto(nomeFornecedor, produto2[0], produto2[1])) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
+		} else {
+		}
+		
+		// precoProduto1 e 2, com trim,
+		// fornecedorController.precoProduto(
+		this.fornecedorController.adicionaCombo(nomeFornecedor, nomeCombo, descricao, fator, produtos);			
+		
+		
+		
 	}
 
 

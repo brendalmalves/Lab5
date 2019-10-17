@@ -229,5 +229,9 @@ public class Fornecedor {
 		return this.produtos.get(new IdProduto(nomeProduto, descricao)).getPreco();
 	}
 
+	public void adicionaCombo(String nomeCombo, String descricao, double fator, String produto1, String produto2) {
+		this.produtos.put(new IdProduto(nomeCombo, descricao), new Combo(nomeCombo, descricao, fator, produto1, produto2));
+	} 
+
 	
 }
