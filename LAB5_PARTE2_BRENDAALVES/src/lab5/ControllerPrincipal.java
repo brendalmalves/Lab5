@@ -78,12 +78,18 @@ public class ControllerPrincipal {
 
 	public void adicionaCompra(String cpf, String nomeFornecedor, String data, String nomeProduto, String descricao) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf, "Erro ao cadastrar compra: cpf nao pode ser vazio ou nulo.");
 		validaEntrada.validaCpf(cpf, "Erro ao cadastrar compra: cpf invalido.");
 		validaEntrada.validaString(nomeFornecedor, "Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
-		validaEntrada.validaString(cpf, "Erro ao cadastrar compra: cpf nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(nomeProduto, "Erro ao cadastrar compra: nome do produto nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(descricao, "Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula.");
 		validaEntrada.validaString(data, "Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
+		if(!fornecedorController.existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao existe.");
+		} else if(data.length() != 10) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
+		}
+		
 		if(fornecedorController.existeProduto(nomeFornecedor, nomeProduto, descricao)) {
 			if(clienteController.existeCliente(cpf)) {
 				double preco = this.fornecedorController.getPreco(nomeFornecedor, nomeProduto, descricao);
@@ -96,11 +102,11 @@ public class ControllerPrincipal {
 		}
 	}
 
-	public double getDebito(String cpf, String nomeFornecedor) {
+	public String getDebito(String cpf, String nomeFornecedor) {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf, "Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
 		validaEntrada.validaCpf(cpf, "Erro ao recuperar debito: cpf invalido.");
 		validaEntrada.validaString(nomeFornecedor, "Erro ao recuperar debito: fornecedor nao pode ser vazio ou nulo.");
-		validaEntrada.validaString(cpf, "Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
 		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao existe.");
 		} else if(!this.clienteController.existeCliente(cpf)){
@@ -116,6 +122,7 @@ public class ControllerPrincipal {
 		validaEntrada.validaString(descricao, "Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
 		validaEntrada.validaString(nomeCombo, "Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(produtos, "Erro no cadastro de combo: combo deve ter produtos.");
+		Fornecedor fornecedor = this.fornecedorController.getFornecedor(nomeFornecedor);
 		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
@@ -124,22 +131,59 @@ public class ControllerPrincipal {
 		}
 		
 		String[] produtosCombo;
-		produtosCombo = produtos.trim().split(",");
+		produtosCombo = produtos.trim().split(", ");
 		String[] produto1;
-		produto1 = produtos.trim().split("-");
+		produto1 = produtosCombo[0].trim().split(" - ");
 		String[] produto2;
-		produto2 = produtos.trim().split("-");
+		produto2 = produtosCombo[1].trim().split(" - ");
 		if(!fornecedorController.existeProduto(nomeFornecedor, produto1[0], produto1[1]) || !fornecedorController.existeProduto(nomeFornecedor, produto2[0], produto2[1])) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
-		} else {
+		} else if(!(fornecedor.tipoProduto(produto1[0], produto1[1]) == "simples") || !(fornecedor.tipoProduto(produto2[0], produto2[1]) == "simples")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
 		}
-		
-		// precoProduto1 e 2, com trim,
-		// fornecedorController.precoProduto(
-		this.fornecedorController.adicionaCombo(nomeFornecedor, nomeCombo, descricao, fator, produtos);			
-		
+		double precoProduto1 = fornecedor.precoProduto(produto1[0].trim(), produto1[1].trim());
+		double precoProduto2 = fornecedor.precoProduto(produto2[0].trim(), produto2[1].trim());
+		this.fornecedorController.adicionaCombo(nomeFornecedor, nomeCombo, descricao, fator, precoProduto1, precoProduto2);			
 		
 		
+	}
+
+	public void editaCombo(String nomeCombo, String descricao, String nomeFornecedor, double novoFator) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(nomeFornecedor, "Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		validaEntrada.validaString(descricao, "Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaString(nomeCombo, "Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao existe.");
+		}
+		if(novoFator <= 0 || novoFator >= 1) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fator invalido.");
+		}
+		this.fornecedorController.editaCombo(nomeCombo, descricao, nomeFornecedor, novoFator);
+		
+	}
+
+	public String exibeContas(String cpf, String nomeFornecedor) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf, "Erro ao exibir conta do cliente: cpf nao pode ser vazio ou nulo.");
+		validaEntrada.validaCpf(cpf, "Erro ao exibir conta do cliente: cpf invalido.");
+		validaEntrada.validaString(nomeFornecedor, "Erro ao exibir conta do cliente: fornecedor nao pode ser vazio ou nulo.");
+		if(!this.fornecedorController.existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: fornecedor nao existe.");
+		} else if(!this.clienteController.existeCliente(cpf)) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cliente nao existe.");
+		}
+		return this.clienteController.exibeConta(cpf, nomeFornecedor);
+	}
+
+	public String exibeContasClientes(String cpf) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(cpf, "Erro ao exibir contas do cliente: cpf nao pode ser vazio ou nulo.");
+		validaEntrada.validaCpf(cpf, "Erro ao exibir contas do cliente: cpf invalido.");
+		if(!this.clienteController.existeCliente(cpf)) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao existe.");
+		}
+		return this.clienteController.exibeContas(cpf);
 	}
 
 

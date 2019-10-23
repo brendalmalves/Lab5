@@ -1,7 +1,7 @@
 package lab5;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Representacao de um cliente, que recebe cpf, nome,
@@ -19,7 +19,7 @@ public class Cliente {
 	/**
 	 * Representacao em String do nome do cliente.
 	 */
-	private String nome;
+	private String nomeCliente;
 	/**
 	 * Representacao em String do email do cliente.
 	 */
@@ -45,14 +45,14 @@ public class Cliente {
 		validaEntrada.validaString(email, "Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
 		validaEntrada.validaString(localizacao, "Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		this.cpf = cpf;
-		this.nome = nome;
+		this.nomeCliente = nome;
 		this.email = email;
 		this.localizacao = localizacao;
-		this.contas = new HashMap<String, Conta>();
+		this.contas = new TreeMap<String, Conta>();
 	}
 	
 	public String getNome() {
-		return nome;
+		return nomeCliente;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Cliente {
 	 * @param nome do cliente
 	 */
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeCliente = nome;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Cliente {
 	 */
 	@Override
 	public String toString() {
-		return this.nome + " - " + this.localizacao + " - " + this.email;
+		return this.nomeCliente + " - " + this.localizacao + " - " + this.email;
 	}
 	
 	/**
@@ -121,12 +121,12 @@ public class Cliente {
 		return true;
 	}
 	
-	public void adicionaCompra(String fornecedor, String data,String nomeProduto, double preco) {
+	public void adicionaCompra(String fornecedor, String data, double preco, String nomeProduto, String descricaoProduto) {
 		if(this.contas.containsKey(fornecedor)) {
-			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data, descricaoProduto);
 		} else {
-			this.contas.put(fornecedor, new Conta(fornecedor));
-			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data);
+			this.contas.put(fornecedor, new Conta(fornecedor, nomeCliente));
+			this.contas.get(fornecedor).adicionaCompra(nomeProduto, preco, data, descricaoProduto);
 		}
 	}
 
@@ -136,6 +136,31 @@ public class Cliente {
 		} else {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
 		}
+	}
+	
+	public boolean verificaConta(String nomeFornecedor) {
+		return this.contas.containsKey(nomeFornecedor);
+	}
+	
+	public String exibeConta(String nomeFornecedor) {
+		return "Cliente: " + this.nomeCliente + " | " + contas.get(nomeFornecedor).toString();
+	}
+
+	public String exibeContas() {
+		if(this.contas.isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao tem nenhuma conta.");
+		}
+		String exibicaoFinal = "Cliente: " + this.nomeCliente + " | ";
+		int i = 0;
+		for (String fornecedor : contas.keySet()) {
+			if(i == contas.size() - 1) {
+				exibicaoFinal += contas.get(fornecedor).toString();
+			} else {
+				exibicaoFinal += contas.get(fornecedor).toString() + " | ";
+			}
+			i++;
+		}
+		return exibicaoFinal;
 	}
 	
 	

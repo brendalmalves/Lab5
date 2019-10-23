@@ -77,12 +77,24 @@ public class Facade {
 		this.controllerPrincipal.adicionaCompra(cpf, nomeFornecedor, data, nomeProduto, descricao);
 	}
 	
-	public double getDebito(String cpf, String nomeFornecedor) {
+	public String getDebito(String cpf, String nomeFornecedor) {
 		return this.controllerPrincipal.getDebito(cpf, nomeFornecedor);
 	}
 	
 	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator, String produtos) {
 		this.controllerPrincipal.adicionaCombo(nomeFornecedor, nomeCombo, descricao, fator, produtos);
+	}
+	
+	public void editaCombo(String nomeCombo, String descricao, String nomeFornecedor, double novoFator) {
+		this.controllerPrincipal.editaCombo(nomeCombo, descricao, nomeFornecedor, novoFator);
+	}
+	
+	public String exibeContas(String cpf, String nomeFornecedor) {
+		return this.controllerPrincipal.exibeContas(cpf, nomeFornecedor);
+	}
+	
+	public String exibeContasClientes(String cpf) {
+		return this.controllerPrincipal.exibeContasClientes(cpf);
 	}
 	
 }

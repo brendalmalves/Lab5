@@ -137,6 +137,8 @@ public class FornecedorController {
 		
 	}
 	
+	
+	
 	/**
 	 * Responsavel por cadastrar um produto no fornecedor indicado.
 	 * @param nomeFornecedor
@@ -254,14 +256,38 @@ public class FornecedorController {
 	public boolean existeProduto(String nomeFornecedor, String nomeProduto, String descricao) {
 		 return this.fornecedores.get(nomeFornecedor).existeProduto(nomeProduto, descricao);
 	}
+	
+	public boolean existeCombo(String nomeFornecedor, String nomeCombo, String descricao) {
+		return this.fornecedores.get(nomeFornecedor).existeProduto(nomeCombo, descricao);
+	}
 
 	public double getPreco(String nomeFornecedor, String nomeProduto, String descricao) {
 		return this.fornecedores.get(nomeFornecedor).getPreco(nomeProduto, descricao);
 	}
 
-	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator,
-			String produtos) {
-		this.fornecedores.get(nomeFornecedor).adicionaCombo(nomeCombo, descricao, fator, produtos);
+	public void adicionaCombo(String nomeFornecedor, String nomeCombo, String descricao, double fator, double precoProduto1, double precoProduto2) {
+		ValidaEntrada validaEntrada = new ValidaEntrada();
+		validaEntrada.validaString(descricao, "Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		validaEntrada.validaString(nomeCombo, "Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		if(!existeFornecedor(nomeFornecedor)) {
+			throw new IllegalArgumentException("");
+		}
+		this.fornecedores.get(nomeFornecedor).adicionaCombo(nomeCombo, descricao, fator, precoProduto1, precoProduto2);
+		
+	}
+
+	public Fornecedor getFornecedor(String nomeFornecedor) {
+		if(existeFornecedor(nomeFornecedor)) {
+			return this.fornecedores.get(nomeFornecedor);
+		}
+		return null;
+	}
+
+	public void editaCombo(String nomeCombo, String descricao, String nomeFornecedor, double novoFator) {
+		if(existeFornecedor(nomeFornecedor)) {
+			this.fornecedores.get(nomeFornecedor).editaCombo(nomeCombo, descricao, novoFator);
+		}
+		
 		
 	}
 

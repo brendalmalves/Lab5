@@ -6,19 +6,20 @@ import java.util.List;
 public class Conta {
 	
 	private String fornecedor;
+	private String cliente;
 	private double debito;
-	private List<String> compras;
+	private List<Compra> compras;
 	
 	
-	public Conta(String fornecedor) {
+	public Conta(String fornecedor, String cliente) {
 		this.fornecedor = fornecedor;
 		this.debito = 0.0;
-		this.compras = new ArrayList<String>();
+		this.compras = new ArrayList<Compra>();
 	} 
 	
-	public void adicionaCompra(String nomeProduto, double preco, String data) {
+	public void adicionaCompra(String nomeProduto, double preco, String data, String descricaoProduto) {
 		this.debito += preco;
-		compras.add(nomeProduto);
+		compras.add(new Compra(nomeProduto, descricaoProduto, preco, data, cliente, this.fornecedor));
 	}
 
 	public double getDebito() {

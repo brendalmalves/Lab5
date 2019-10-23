@@ -31,7 +31,7 @@ public class Fornecedor {
 	/**
 	 * Representacao do mapa que armazena os produtos cadastrados.
 	 */
-	private Map<IdProduto, Produto> produtos;
+	private Map<IdProduto, ProdutoInterface> produtos;
 	
 	/**
 	 * Constroi a representacao de um fornecedor, a partir do seu
@@ -48,7 +48,7 @@ public class Fornecedor {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.produtos = new HashMap<IdProduto, Produto>();
+		this.produtos = new HashMap<IdProduto, ProdutoInterface>();
 		
 	}
 	
@@ -118,7 +118,7 @@ public class Fornecedor {
 			return this.nome + " -";
 		}
 		OrdenaProdutoId c = new OrdenaProdutoId();
-		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
+		List<ProdutoInterface> produtosOrdenados = new ArrayList<>(produtos.values());
 		Collections.sort(produtosOrdenados, c);
 		String listaProdutos = "";
 		for (int i = 0; i < produtosOrdenados.size(); i++) {
@@ -144,7 +144,7 @@ public class Fornecedor {
 		validaEntrada.validaString(descricao, "Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
 		validaEntrada.validaNumeroPositivo(novoValor, "Erro na edicao de produto: preco invalido.");
 		if(existeProduto(nome, descricao)) {
-			this.produtos.get(new IdProduto(nome, descricao)).setPreco(novoValor);
+			((Produto) produtos.get(new IdProduto(nome, descricao))).setPreco(novoValor);
 			return true;
 		} else {
 			throw new IllegalArgumentException("Erro na edicao de produto: produto nao existe.");
@@ -228,10 +228,34 @@ public class Fornecedor {
 	public double getPreco(String nomeProduto, String descricao) {
 		return this.produtos.get(new IdProduto(nomeProduto, descricao)).getPreco();
 	}
+	
+	
+	public void adicionaCombo(String nomeCombo, String descricao, double fator, double precoProduto1, double precoProduto2) {
+		if(existeProduto(nomeCombo, descricao)) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
+		}
+		this.produtos.put(new IdProduto(nomeCombo, descricao), new Combo(nomeCombo, descricao, fator, precoProduto1, precoProduto2));
+	}
 
-	public void adicionaCombo(String nomeCombo, String descricao, double fator, String produto1, String produto2) {
-		this.produtos.put(new IdProduto(nomeCombo, descricao), new Combo(nomeCombo, descricao, fator, produto1, produto2));
-	} 
+
+	public double precoProduto(String nome, String descricao) {
+		if(existeProduto(nome, descricao)) {
+			return this.produtos.get(new IdProduto(nome, descricao)).getPreco();
+		}
+		return 0.0;
+	}
+
+	public String tipoProduto(String nome, String descricao) {
+		return this.produtos.get(new IdProduto(nome, descricao)).getTipoProduto();
+	}
+
+	public void editaCombo(String nomeCombo, String descricao, double novoFator) {
+		if(existeProduto(nomeCombo, descricao)) {
+			((Combo) this.produtos.get(new IdProduto(nomeCombo, descricao))).setFator(novoFator);
+		} else {
+			throw new IllegalArgumentException("Erro na edicao de combo: produto nao existe.");
+		}
+	}
 
 	
 }

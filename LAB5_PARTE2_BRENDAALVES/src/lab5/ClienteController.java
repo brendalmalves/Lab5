@@ -1,10 +1,12 @@
 package lab5;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -20,7 +22,7 @@ public class ClienteController {
 	/**
 	 * Representacao de um mapa responsavel por armazenar os clientes cadastrados.
 	 */
-	private HashMap<String, Cliente> clientes;
+	private Map<String, Cliente> clientes;
 	
 	/**
 	 * Constroi a representacao de um mapa responsavel por armazenar
@@ -151,18 +153,31 @@ public class ClienteController {
 		ValidaEntrada validaEntrada = new ValidaEntrada();
 		validaEntrada.validaString(cpf, "Erro ao cadastrar compra: cpf nao pode ser vazio ou nulo.");
 		if(this.clientes.containsKey(cpf)) {
-			this.clientes.get(cpf).adicionaCompra(nomeFornecedor, data, nomeProduto, preco);
+			this.clientes.get(cpf).adicionaCompra(nomeFornecedor, data, preco, nomeProduto, descricao);
 		} else {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: cliente nao existe.");
 		}
 	}
 
-	public double getDebito(String cpf, String nomeFornecedor) {
-		if(this.clientes.containsKey(cpf)) {
-			return this.clientes.get(cpf).getDebito(nomeFornecedor);
-		} else {
+	public String getDebito(String cpf, String nomeFornecedor) {
+		DecimalFormat converteDecimal = new DecimalFormat("#0.00");
+		if(!this.clientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao existe.");
 		}
+		return converteDecimal.format(this.clientes.get(cpf).getDebito(nomeFornecedor)).replaceAll(",", ".");
+		
+	}
+
+	public String exibeConta(String cpf, String nomeFornecedor) {
+		if(!this.clientes.get(cpf).verificaConta(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
+		return this.clientes.get(cpf).exibeConta(nomeFornecedor);
+		
+	}
+
+	public String exibeContas(String cpf) {
+		return this.clientes.get(cpf).exibeContas();
 	}
 
 }

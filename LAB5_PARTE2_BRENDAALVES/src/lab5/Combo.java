@@ -1,26 +1,52 @@
 package lab5;
 
-public class Combo extends Produto {
+public class Combo implements ProdutoInterface {
 	
 	private String nome;
 	private String descricao;
 	private double fator;
-	private String produto1;
-	private String produto2;
+	private double precoProduto1;
+	private double precoProduto2;
+	private String tipoProduto;
+	private double preco;
 	
 
-	public Combo(String nome,  String descricao, double fator, String produto1, String produto2) {
-		super(nome, descricao, preco);
+	public Combo(String nome, String descricao, double fator, double precoProduto1, double precoProduto2) {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.fator = fator;
-		this.produto1 = produto1;
-		this.produto2 = produto2;
-		
+		this.precoProduto1 = precoProduto1;
+		this.precoProduto2 = precoProduto2;
+		this.tipoProduto = "combo";
+		this.preco = (precoProduto1 + precoProduto2) - ((precoProduto1 + precoProduto2) * fator);
 	}
+
+	@Override
+	public String toString() {
+		return this.nome + " - " + this.descricao + " - R$" + String.format("%.2f",this.preco).replace(".", ",");
+	}
+
 	
-	
-	
+	public double getPreco() {
+		return preco;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	private void setPreco() {
+		this.preco = (precoProduto1 + precoProduto2) - ((precoProduto1 + precoProduto2) * fator);
+	}
+
+
+	public String getTipoProduto() {
+		return tipoProduto;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +76,11 @@ public class Combo extends Produto {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+
+	public void setFator(double novoFator) {
+		this.fator = novoFator;
+		setPreco();
 	}
 
 }

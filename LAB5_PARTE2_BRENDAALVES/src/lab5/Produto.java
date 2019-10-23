@@ -6,7 +6,7 @@ package lab5;
  * @author Brenda Louisy Morais Alves - Matricula 119111113.
  *
  */
-public class Produto {
+public class Produto implements ProdutoInterface{
 	
 	/**
 	 * Representacao em double do preco do produto.
@@ -21,15 +21,10 @@ public class Produto {
 	 * Representacao em String da descricao do produto.
 	 */
 	private String descricao;
+	private String tipoProduto;
 	
-	public String getNome() {
-		return nome;
-	}
+	
 
-
-	public String getDescricao() {
-		return descricao;
-	}
 
 
 	/**
@@ -46,6 +41,7 @@ public class Produto {
 		this.descricao = descricao;
 		this.nome = nome;
 		this.preco = preco;
+		this.tipoProduto = "simples";
 	}
 	
 	
@@ -60,6 +56,19 @@ public class Produto {
 	@Override
 	public String toString() {
 		return this.nome + " - " + this.descricao + " - R$" + String.format("%.2f",this.preco).replace(".", ",");
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public String getTipoProduto() {
+		return tipoProduto;
 	}
 	
 
