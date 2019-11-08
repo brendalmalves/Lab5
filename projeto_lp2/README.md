@@ -1,31 +1,71 @@
 # PROJETO LP2
 
-## US1
+## Parte 1
+
+### US1
 #### Codificado:
 - Classe Pesquisa
 - Classe ControllerPesquisas
 - Métodos necessários para implementar os métodos da Facade da US1
 #### Falta:
-- Adicionar os testes de unidade
+
 #### Comentário:
 - Até o momento, o código atende às especificações pedidas na US1, passando nos testes do EasyAccept propostos até o momento.
-- Ambas as classes que adicionei herdam da classe Validacao, em virtude do uso constante dos casos de lançamento de exceções.
+- Ambas as classes adicionadas herdam da classe Validacao, em virtude do uso constante dos casos de lançamento de exceções.
 
-## US2
+### US2
+#### Codificado:
+- Classe Pesquisador
+- Classe ControllerPesquisador
+- Métodos necessários para implementar os métodos da Facade US2.
+- Métodos de verificação de e-mail e URL na classe Validação.
+- Testes de unidade da US1.
+#### Falta:
 
-## US3
+#### Comentário:
+- O código atende à todas as especificações, obtendo êxito nos testes de aceitação.
+- Todas as classes adicionadas herdam da classe validacao devido à necessidade de se verificar entradas para lançar exceções constantemente.
 
-## US4
+### US3
+#### Codificado:
+- Classe Objetivo e ControllerObjetivos.
+-Classe Problema e ControllerProblemas.
+- Métodos necessários para implementar os métodos da Facade da US3.
+-Testes de unidade da US4.
+#### Falta:
+
+#### Comentário:
+- O codigo atende à todas as especificações e os testes de aceitação não apontam nenhum erro neste.
+- Todas as classes adicionadas herdam da classe Validacao devido à necessidade de se verificar entradas para lançar exceções constantemente.
+
+### US4
 #### Codificado:
 - Classe Item
 - Classe Atividade
 - Classe ControllerAtividades
 - Métodos necessários para implementar os métodos da Facade da US4
+- Métodos da US4 na Facade
 - Iniciada Classe Validacao
 #### Falta:
-- Tratar erros
-- Adequar EasyAccepts
+- ~~Tratar erros~~
+- ~~Adequar EasyAccepts~~
+- ~~Documentar~~
 #### Comentário:
-- Ainda irei revisar o código e adequar melhor à especificação. Codifiquei uma primeira versão para o que foi pedido na primeira parte do projeto.
-- Adicionei uma Classe Validacao e proponho que a gente faça dela uma classe mãe e todas as classes do nosso sistema herdem dela, já que os casos de lançamento de exceções são comuns para todas as classes. 
-- Alterei algumas das minhas classes.
+- ~~Ainda irei revisar o código e adequar melhor à especificação. Codifiquei uma primeira versão para o que foi pedido na primeira parte do projeto~~
+- **Adicionei uma Classe Validacao e proponho que a gente faça dela uma classe mãe e todas as classes do nosso sistema herdem dela, já que os casos de lançamento de exceções são comuns para todas as classes.** 
+- ~~Adequei parte dos EasyAccepts. Ficaram dois erros que não consegui identificar de onde vieram e desconfio de um problema nos testes da US4.~~
+- Talvez ainda altere a implementação de alguns detalhes.
+
+## Parte 2
+### US5
+- Iniciei alterações para a parte 2. Como sujerido pelo monitor, dividi a parta src em mais de um pacote, para organizar melhor as classes. Iniciei também algumas alterações para minha US e adicionei os EasyAccepts da parte 2.
+- Adicionei novos métodos em Validação
+- Criei novas Exceções
+- Adequei alguns testes do EasyAccept
+
+### US6
+#### Codificado:
+-Todas as funcionalidades da US6.
+#### Falta:
+- Documentar funcionalidades da US6.
+-Fazer os testes de unidade de outra US.
