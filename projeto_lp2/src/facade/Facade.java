@@ -151,9 +151,9 @@ public class Facade {
     	
     }
     
-    public String desassociaProblema(String idPesquisa, String idProblema) {
+    public String desassociaProblema(String idPesquisa) {
     	
-    	return this.cGeral.desassociaProblema(cPesquisa, cProblema, idPesquisa, idProblema);
+    	return this.cGeral.desassociaProblema(cPesquisa, idPesquisa);
     	
     }
     
@@ -218,10 +218,6 @@ public class Facade {
     
     public String listaResultados(String codigoAtividade) {
     	return this.cAtividade.listaResultados(codigoAtividade);
-    }
-    
-    public int getDuracao(String codigoAtividade) {
-    	return this.cAtividade.getDuracao(codigoAtividade);
     }
     //US8
     public String busca(String termo){
